@@ -30,6 +30,7 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 1300,
     height: 800,
+    autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
       plugins: true,
@@ -48,7 +49,7 @@ const createWindow = () => {
   if (token !== '') {
     mainWindow.loadURL(`https://peakrp.com/client/peakBrowser/${token}`);
   } else {
-    mainWindow.loadFile(path.join(__dirname, 'index.html'));
+    mainWindow.loadFile(path.join(__dirname, 'landing-page/index.html'));
   }
 };
 

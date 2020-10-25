@@ -9,12 +9,11 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
-  text-align: center;
-  gap: 2rem;
+  font-size: 1.25rem;
 }
 
 p {
-  font-size: 1.25rem;
+  text-align: center;
 }
 
 button {
@@ -30,4 +29,8 @@ button {
 button:hover {
   background-color: #00ab54;
   border-color: #b9f373;
+}
+
+a {
+  color: #6bdbff;
 }
