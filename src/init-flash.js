@@ -1,3 +1,4 @@
+const { app } = require('electron');
 const path = require('path');
 
 const getPluginName = () => {
@@ -11,7 +12,7 @@ const getPluginName = () => {
   }
 };
 
-module.exports = (app) => {
+module.exports = () => {
   const pluginName = getPluginName();
 
   app.commandLine.appendSwitch(

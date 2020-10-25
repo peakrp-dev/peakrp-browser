@@ -1,7 +1,9 @@
 const { app, BrowserWindow, shell } = require('electron');
 const path = require('path');
-const initFlash = require('./init-flash');
+
 const getToken = require('./get-token');
+const initFlash = require('./init-flash');
+const initMenu = require('./init-menu');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -20,9 +22,8 @@ app.on('open-url', (event, data) => {
 
 app.setAsDefaultProtocolClient('peakrp');
 
-// Flash
-
-initFlash(app);
+initFlash();
+initMenu();
 
 // Start app
 
@@ -31,7 +32,6 @@ const createWindow = () => {
     width: 1300,
     height: 800,
     icon: path.join(__dirname, 'icons/peakrp.ico'), // TODO: Support a mac icon
-    autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
       plugins: true,
