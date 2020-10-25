@@ -9,7 +9,7 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "test": "jest"
   },
   "keywords": [],
   "author": {
@@ -18,7 +18,7 @@
   },
   "license": "MIT",
   "config": {
-    "forge": "forge.config.js"
+    "forge": "./forge.config.js"
   },
   "build": {
     "appId": "peakrp",
@@ -40,6 +40,7 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.54",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
     "@electron-forge/maker-zip": "^6.0.0-beta.54",
-    "electron": "10.1.5"
+    "electron": "10.1.5",
+    "jest": "^26.6.1"
   }
 }
