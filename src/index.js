@@ -30,6 +30,7 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 1300,
     height: 800,
+    icon: path.join(__dirname, 'icons/peakrp.ico'), // TODO: Support a mac icon
     autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
