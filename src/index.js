@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, shell } = require('electron');
 const path = require('path');
 const initFlash = require('./init-flash');
 const getToken = require('./get-token');
@@ -45,6 +45,11 @@ const createWindow = () => {
       token = getToken(args[1]);
     }
   }
+
+  mainWindow.webContents.on('will-navigate', (event, url) => {
+    event.preventDefault();
+    shell.openExternal(url);
+  });
 
   if (token !== '') {
     mainWindow.loadURL(`https://peakrp.com/client/peakBrowser/${token}`);
