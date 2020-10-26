@@ -1,6 +1,13 @@
 module.exports = {
   packagerConfig: {
     icon: 'icons/peakrp',
+    protocols: [
+      {
+        name: 'peakrp-protocol',
+        schemes: 'peakrp',
+      },
+    ],
+    appCategoryType: 'public.app-category.games',
   },
   makers: [
     {

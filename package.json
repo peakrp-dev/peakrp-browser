@@ -20,16 +20,6 @@
   "config": {
     "forge": "./forge.config.js"
   },
-  "build": {
-    "appId": "peakrp",
-    "mac": {
-      "category": "public.app-category.games"
-    },
-    "protocols": {
-      "name": "peakrp-protocol",
-      "schemes": "peakrp"
-    }
-  },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0"
   },
