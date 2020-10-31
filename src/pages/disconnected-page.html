@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>PeakRP</title>
+    <link rel="stylesheet" href="../assets/index.css" />
+  </head>
+  <body>
+    <img src="../assets/logo.png" />
+    <p>You have disconnected from PeakRP</p>
+    <button type="button" onclick="reconnect()">Reconnect</button>
+    <script>
+      const { remote } = require('electron');
+      const { launchGame } = remote.require('./index.js');
+
+      function reconnect() {
+        launchGame(remote.getCurrentWindow());
+      }
+    </script>
+  </body>
+</html>

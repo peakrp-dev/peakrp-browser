@@ -4,6 +4,7 @@ const path = require('path');
 const getToken = require('./get-token');
 const initFlash = require('./init-flash');
 const initMenu = require('./init-menu');
+const loadLocalPage = require('./load-local-page');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -25,6 +26,17 @@ app.setAsDefaultProtocolClient('peakrp');
 initFlash();
 initMenu();
 
+const CLIENT_URL = 'https://peakrp.com/client/peakBrowser/';
+
+const launchGame = (browserWindow) => {
+  if (token === '') {
+    loadLocalPage(browserWindow, 'landing-page');
+    return;
+  }
+
+  browserWindow.loadURL(`${CLIENT_URL}${token}`);
+};
+
 // Start app
 
 const createWindow = () => {
@@ -34,6 +46,7 @@ const createWindow = () => {
     icon: path.join(__dirname, 'icons/peakrp.ico'), // TODO: Support a mac icon
     webPreferences: {
       nodeIntegration: true,
+      enableRemoteModule: true,
       plugins: true,
     },
   });
@@ -48,14 +61,36 @@ const createWindow = () => {
   }
 
   mainWindow.webContents.on('will-navigate', (event, url) => {
+    if (url.startsWith(CLIENT_URL)) {
+      return;
+    }
+
+    if (url.startsWith('https://findretros.com/')) {
+      return;
+    }
+
+    // Handle FindRetros voting redirect
+    if (
+      url.startsWith('https://peakrp.com/client') &&
+      !url.startsWith(CLIENT_URL)
+    ) {
+      launchGame(mainWindow);
+      return;
+    }
+
+    if (url.startsWith('https://peakrp.com/dc')) {
+      loadLocalPage(mainWindow, 'disconnected-page');
+      return;
+    }
+
     event.preventDefault();
     shell.openExternal(url);
   });
 
   if (token !== '') {
-    mainWindow.loadURL(`https://peakrp.com/client/peakBrowser/${token}`);
+    launchGame(mainWindow);
   } else {
-    mainWindow.loadFile(path.join(__dirname, 'landing-page/index.html'));
+    loadLocalPage(mainWindow, 'landing-page');
   }
 };
 
@@ -80,3 +115,5 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+exports.launchGame = launchGame;
