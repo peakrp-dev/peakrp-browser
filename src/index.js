@@ -87,6 +87,11 @@ const createWindow = () => {
     shell.openExternal(url);
   });
 
+  mainWindow.webContents.on('new-window', (event, url) => {
+    event.preventDefault();
+    shell.openExternal(url);
+  });
+
   if (token !== '') {
     launchGame(mainWindow);
   } else {
