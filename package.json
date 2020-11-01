@@ -1,8 +1,8 @@
 {
   "name": "peakrp-browser-electron",
   "productName": "PeakRP",
-  "version": "1.0.0",
-  "description": "My Electron application description",
+  "version": "0.0.1",
+  "description": "Runs the PeakRP client with Adobe Flash Player",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
