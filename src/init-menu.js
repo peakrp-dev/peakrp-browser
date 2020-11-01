@@ -6,11 +6,17 @@ const menu = Menu.buildFromTemplate([
     label: 'PeakRP',
     submenu: [
       {
+        label: 'Reload',
+        click: (menuItem, browserWindow) => {
+          browserWindow.reload();
+        },
+      },
+      {
         label: 'Clear cache',
         click: async () => {
           await session.defaultSession.clearCache();
           await dialog.showMessageBox({
-            message: 'The cache has been cleared, please restart the game',
+            message: 'The cache has been cleared, please reload',
           });
         },
       },
