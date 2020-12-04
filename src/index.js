@@ -6,12 +6,16 @@ const getToken = require('./get-token');
 const initFlash = require('./init-flash');
 const initMenu = require('./init-menu');
 const loadLocalPage = require('./load-local-page');
+const settings = require('./settings');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   // eslint-disable-line global-require
   app.quit();
 }
+
+// Load settings
+settings.load();
 
 // Authentication
 
@@ -24,8 +28,10 @@ app.on('open-url', (event, data) => {
 
 app.setAsDefaultProtocolClient('peakrp');
 
-app.commandLine.appendSwitch('high-dpi-support', 1);
-app.commandLine.appendSwitch('force-device-scale-factor', 1);
+if (settings.get('enableBlurryClientFix')) {
+  app.commandLine.appendSwitch('high-dpi-support', 1);
+  app.commandLine.appendSwitch('force-device-scale-factor', 1);
+}
 
 initFlash();
 initMenu();
