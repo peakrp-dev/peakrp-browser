@@ -1,5 +1,6 @@
-const { app, BrowserWindow, shell } = require('electron');
+const { app, BrowserWindow, dialog, shell } = require('electron');
 const path = require('path');
+const fetch = require('node-fetch');
 
 const getToken = require('./get-token');
 const initFlash = require('./init-flash');
@@ -39,7 +40,7 @@ const launchGame = (browserWindow) => {
 
 // Start app
 
-const createWindow = () => {
+const createWindow = async () => {
   const mainWindow = new BrowserWindow({
     width: 1300,
     height: 800,
@@ -96,6 +97,24 @@ const createWindow = () => {
     launchGame(mainWindow);
   } else {
     loadLocalPage(mainWindow, 'landing-page');
+  }
+
+  const versionResponse = await fetch(
+    'https://peakrp.com/api/peakBrowserVersionCheck',
+  );
+  const version = await versionResponse.json();
+
+  if (app.getVersion() !== version) {
+    const { response: buttonIndexClicked } = await dialog.showMessageBox({
+      type: 'warning',
+      message: 'Your PeakRP browser version is out of date, please update',
+      buttons: ['Visit PeakRP Wiki Update Instructions'],
+      cancelId: -1,
+    });
+
+    if (buttonIndexClicked === 0) {
+      shell.openExternal('https://wiki.peakrp.com/peakrp-browser');
+    }
   }
 };
 
