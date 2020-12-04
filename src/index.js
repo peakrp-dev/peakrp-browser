@@ -24,6 +24,9 @@ app.on('open-url', (event, data) => {
 
 app.setAsDefaultProtocolClient('peakrp');
 
+app.commandLine.appendSwitch('high-dpi-support', 1);
+app.commandLine.appendSwitch('force-device-scale-factor', 1);
+
 initFlash();
 initMenu();
 
