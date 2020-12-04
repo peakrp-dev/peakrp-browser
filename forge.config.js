@@ -15,6 +15,7 @@ module.exports = {
       config: {
         iconUrl: 'https://peakrp.com/img/browser-icons/peakrp.ico',
         setupIcon: 'icons/setup.ico',
+        loadingGif: 'icons/setup-splash.gif',
       },
     },
     {
