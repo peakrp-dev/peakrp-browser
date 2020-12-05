@@ -7,7 +7,6 @@ let settings = null;
 const getSettingsPath = () => {
   const userDataPath = app.getPath('userData');
   const settingsPath = path.join(userDataPath, 'settings.json');
-  console.log(settingsPath);
   return settingsPath;
 };
 

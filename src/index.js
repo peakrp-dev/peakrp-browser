@@ -1,4 +1,12 @@
-const { app, BrowserWindow, dialog, shell } = require('electron');
+const {
+  app,
+  BrowserWindow,
+  contextBridge,
+  dialog,
+  ipcMain,
+  shell,
+} = require('electron');
+
 const path = require('path');
 const fetch = require('node-fetch');
 
@@ -22,7 +30,7 @@ settings.load();
 let token = '';
 
 // Catch peakrp:// parameters on mac
-app.on('open-url', (event, data) => {
+app.on('open-url', (_event, data) => {
   token = getToken(data);
 });
 
@@ -55,8 +63,8 @@ const createWindow = async () => {
     height: 800,
     icon: path.join(__dirname, 'icons/peakrp.ico'), // TODO: Support a mac icon
     webPreferences: {
-      nodeIntegration: true,
-      enableRemoteModule: true,
+      preload: path.join(__dirname, 'preload.js'),
+      contextIsolation: true,
       plugins: true,
     },
   });
@@ -126,6 +134,11 @@ const createWindow = async () => {
     }
   }
 };
+
+ipcMain.handle('reconnect', () => {
+  const browserWindow = BrowserWindow.getFocusedWindow();
+  launchGame(browserWindow);
+});
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

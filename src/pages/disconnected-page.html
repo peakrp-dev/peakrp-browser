@@ -4,18 +4,12 @@
     <meta charset="UTF-8" />
     <title>PeakRP</title>
     <link rel="stylesheet" href="../assets/index.css" />
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self';" />
   </head>
   <body>
     <img src="../assets/logo.png" />
     <p>You have disconnected from PeakRP</p>
-    <button type="button" onclick="reconnect()">Reconnect</button>
-    <script>
-      const { remote } = require('electron');
-      const { launchGame } = remote.require('./index.js');
-
-      function reconnect() {
-        launchGame(remote.getCurrentWindow());
-      }
-    </script>
+    <button type="button" id="reconnect-button">Reconnect</button>
+    <script src="disconnected-page.js"></script>
   </body>
 </html>
