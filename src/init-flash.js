@@ -4,7 +4,7 @@ const path = require('path');
 const getPluginName = () => {
   switch (process.platform) {
     case 'win32':
-      return 'pepper-flash-player/pepflashplayer64_32_0_0_445.dll';
+      return 'pepper-flash-player/pepflashplayer-64-32.0.0.453.dll';
     case 'darwin':
       return 'pepper-flash-player/PepperFlashPlayer.plugin';
     case 'linux':
