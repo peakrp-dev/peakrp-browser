@@ -1,5 +1,4 @@
 const { dialog, Menu, session } = require('electron');
-const loadLocalPage = require('./load-local-page');
 const settings = require('./settings');
 
 const getToggleBlurryFixLabel = () => {
@@ -59,12 +58,6 @@ const createMenu = () => {
           label: 'Open DevTools',
           click: (menuItem, browserWindow) => {
             browserWindow.webContents.openDevTools();
-          },
-        },
-        {
-          label: 'Go to disconnect page',
-          click: (menuItem, browserWindow) => {
-            loadLocalPage(browserWindow, 'disconnected-page');
           },
         },
       ],
