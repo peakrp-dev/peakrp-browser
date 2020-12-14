@@ -4,6 +4,10 @@ const path = require('path');
 
 let settings = null;
 
+const defaultSettings = {
+  enableBlurryClientFix: false,
+};
+
 const getSettingsPath = () => {
   const userDataPath = app.getPath('userData');
   const settingsPath = path.join(userDataPath, 'settings.json');
@@ -14,10 +18,6 @@ const load = () => {
   const settingsPath = getSettingsPath();
 
   const settingsFileExists = fs.existsSync(settingsPath);
-
-  const defaultSettings = {
-    enableBlurryClientFix: true,
-  };
 
   const savedSettings = settingsFileExists
     ? JSON.parse(fs.readFileSync(settingsPath))
