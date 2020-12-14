@@ -1,24 +1,28 @@
 const { app } = require('electron');
 const path = require('path');
 
-const getPluginName = () => {
+const flashVersion = '32.0.0.465';
+
+const getPluginPath = () => {
   switch (process.platform) {
     case 'win32':
-      return 'pepper-flash-player/pepflashplayer-64-32.0.0.453.dll';
+      return process.arch === 'x64'
+        ? `pepflashplayer-64-${flashVersion}.dll`
+        : `pepflashplayer-32-${flashVersion}.dll`;
     case 'darwin':
-      return 'pepper-flash-player/PepperFlashPlayer.plugin';
+      return 'PepperFlashPlayer.plugin';
     case 'linux':
-      return 'pepper-flash-player/libpepflashplayer.so';
+      return 'libpepflashplayer.so'; // not in the project yet
   }
 };
 
 module.exports = () => {
-  const pluginName = getPluginName();
+  const pluginPath = getPluginPath();
 
   app.commandLine.appendSwitch(
     'ppapi-flash-path',
-    path.join(__dirname, pluginName),
+    path.join(__dirname, 'pepper-flash-player', pluginPath),
   );
 
-  app.commandLine.appendSwitch('ppapi-flash-version', '32.0.0.445');
+  app.commandLine.appendSwitch('ppapi-flash-version', flashVersion);
 };
