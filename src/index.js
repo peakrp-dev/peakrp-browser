@@ -15,6 +15,7 @@ const initFlash = require('./init-flash');
 const initMenu = require('./init-menu');
 const loadLocalPage = require('./load-local-page');
 const settings = require('./settings');
+const { platform } = require('os');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -46,9 +47,15 @@ initMenu();
 
 const CLIENT_URL = 'https://peakrp.com/client/peakBrowser/';
 
+const loadLandingPage = (browserWindow) => {
+  const page =
+    process.platform === 'linux' ? 'landing-page-linux' : 'landing-page';
+  loadLocalPage(browserWindow, page);
+};
+
 const launchGame = (browserWindow) => {
   if (token === '') {
-    loadLocalPage(browserWindow, 'landing-page');
+    loadLandingPage(browserWindow);
     return;
   }
 
@@ -110,14 +117,10 @@ const createWindow = async () => {
     shell.openExternal(url);
   });
 
-  if (token !== '') {
-    launchGame(mainWindow);
-  } else {
-    loadLocalPage(mainWindow, 'landing-page');
-  }
+  launchGame(mainWindow);
 
   const versionResponse = await fetch(
-    'https://peakrp.com/api/peakBrowserVersionCheck',
+    'https://peakrp.com/api/peakBrowserVersionCheck'
   );
   const version = await versionResponse.json();
 
@@ -134,6 +137,12 @@ const createWindow = async () => {
     }
   }
 };
+
+ipcMain.handle('connect', (event, receivedToken) => {
+  token = receivedToken;
+  const browserWindow = BrowserWindow.getFocusedWindow();
+  launchGame(browserWindow);
+});
 
 ipcMain.handle('reconnect', () => {
   const browserWindow = BrowserWindow.getFocusedWindow();
