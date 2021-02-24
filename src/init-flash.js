@@ -1,29 +1,38 @@
 const { app } = require('electron');
 const path = require('path');
 
-const getPlugin = () => {
-  if (process.platform === 'win32') {
-    if (process.arch === 'x64') {
-      return {
-        pluginPath: 'pepflashplayer64_32_0_0_363.dll',
-        version: '32.0.0.363',
-      };
-    }
-
-    return {
+const versions = {
+  win32: {
+    x64: {
+      pluginPath: 'pepflashplayer64_32_0_0_363.dll',
+      version: '32.0.0.363',
+    },
+    ia32: {
       pluginPath: 'pepflashplayer32_32_0_0_363.dll',
       version: '32.0.0.363',
-    };
-  }
-
-  if (process.platform === 'darwin') {
-    return {
+    },
+  },
+  darwin: {
+    x64: {
       pluginPath: 'PepperFlashPlayer.plugin',
       version: '30.0.0.127',
-    };
-  }
+    },
+    ia32: null,
+  },
+  linux: {
+    x64: {
+      pluginPath: 'libpepflashplayer-64.so',
+      version: '25.0.0.127',
+    },
+    ia32: {
+      pluginPath: 'libpepflashplayer-32.so',
+      version: '25.0.0.127',
+    },
+  },
+};
 
-  return null;
+const getPlugin = () => {
+  return versions[process.platform][process.arch] ?? null;
 };
 
 module.exports = () => {
