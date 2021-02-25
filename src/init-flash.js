@@ -50,4 +50,5 @@ module.exports = () => {
   );
 
   app.commandLine.appendSwitch('ppapi-flash-version', version);
+  app.commandLine.appendSwitch('no-sandbox'); // required to allow flash to work on linux
 };
