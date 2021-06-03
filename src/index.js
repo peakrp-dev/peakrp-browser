@@ -1,21 +1,13 @@
-const {
-  app,
-  BrowserWindow,
-  contextBridge,
-  dialog,
-  ipcMain,
-  shell,
-} = require('electron');
+const { app, BrowserWindow, dialog, ipcMain, shell } = require('electron');
 
 const path = require('path');
 const fetch = require('node-fetch');
 
-const getToken = require('./get-token');
+const parseLaunchArg = require('./parse-launch-arg');
 const initFlash = require('./init-flash');
 const initMenu = require('./init-menu');
 const loadLocalPage = require('./load-local-page');
 const settings = require('./settings');
-const { platform } = require('os');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -32,7 +24,7 @@ let token = '';
 
 // Catch peakrp:// parameters on mac
 app.on('open-url', (_event, data) => {
-  token = getToken(data);
+  token = parseLaunchArg(data);
 });
 
 app.setAsDefaultProtocolClient('peakrp');
@@ -81,7 +73,7 @@ const createWindow = async () => {
     const args = process.argv;
 
     if (args.length >= 2) {
-      token = getToken(args[1]);
+      token = parseLaunchArg(args[1]);
     }
   }
 

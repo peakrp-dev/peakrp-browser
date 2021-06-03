@@ -1,4 +1,4 @@
-const getToken = require('./get-token');
+const getToken = require('./parse-launch-arg');
 
 test('should return an empty string if the url is an emptry string', () => {
   const url = '';

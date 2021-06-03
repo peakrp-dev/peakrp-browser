@@ -1,7 +1,7 @@
 const regex = /peakrp:\/\/(.+?)\/?$/;
 
-module.exports = (url) => {
-  const matches = url.match(regex);
+module.exports = (launchArg) => {
+  const matches = launchArg.match(regex);
 
   if (matches === null || matches.length < 2) {
     return '';
